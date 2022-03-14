@@ -1,0 +1,12 @@
+.stepsContainer {
+  width: 100%;
+  height: 100vh;
+  background-color: #f7f4eb;
+  background: url("../../assets/images/gourmandise/bg_banner.jpg");
+}
+
+.stepsContainer .appLogo {
+  width: 300px;
+  margin-top: 30px !important;
+  margin: auto;
+}

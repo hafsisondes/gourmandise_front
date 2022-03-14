@@ -1,0 +1,22 @@
+.sectionContainer {
+  /* justify-content: center;
+  align-items: center; */
+  padding: 0 20px;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bgLight {
+  background-color: #fff;
+}
+.bgLight2 {
+  background-color: #f7f4eb;
+}
+
+.bgCreme {
+  background-color: #bf9b63;
+}
+
+.bgDark {
+  background-color: #181613;
+}

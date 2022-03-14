@@ -1,0 +1,38 @@
+.qrCodeScannerContainer {
+  display: inline-block;
+  height: fit-content;
+  width: 100%;
+  /* background-color: #f7f7f71f; */
+  background-color: #0000000a;
+  border-radius: 5px;
+  padding: 30px;
+}
+.qrCodeScannerContainer .qrCodeScanner {
+  display: block;
+  font-size: 4em;
+  color: #b18f5c;
+}
+.qrCodeScannerContainer .description {
+  font-size: 1em;
+  color: #b18f5c;
+}
+
+.qrCodeScannerContainer .qrcodeScannerInput {
+  margin: 20px 0;
+  color: #000000c2 !important;
+  font-size: 0.8em;
+  height: 50px;
+  border-radius: 5px;
+  border: none;
+  background-color: #00000025;
+  width: 80%;
+  text-align: center;
+  font-weight: bold;
+}
+.qrCodeScannerContainer .qrcodeScannerInput::placeholder {
+  color: rgba(36, 36, 36, 0.624) !important;
+}
+
+.qrCodeScannerContainer .qrcodeScannerInput:focus-visible {
+  border: #bf9a62 !important;
+}

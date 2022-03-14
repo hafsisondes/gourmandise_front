@@ -1,0 +1,68 @@
+.container {
+  position: relative;
+  width: 100%;
+  /* background: #f7f7f71f; */
+  background-color: #0000000a;
+  padding: 20px;
+  min-height: 30vh;
+  height: fit-content;
+  overflow-y: auto;
+  max-height: 70vh;
+  margin: auto;
+  border-radius: 5px;
+}
+
+/* width */
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.container::-webkit-scrollbar-track {
+  background: #15171900;
+
+  border-radius: 5px;
+}
+
+/* Handle */
+.container::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.501);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+.container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.container > .stepsContent {
+  background-color: aliceblue;
+  margin: 5px;
+  padding: 15px;
+  border-radius: 5px;
+  transition: 0.3s;
+  color: #bf9a62;
+  transform: translateY(10px);
+}
+
+.header {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: inline-block;
+  /* color: ; */
+  border-radius: 10px;
+  width: 100%;
+}
+
+.header h2 {
+  margin: 10px 0;
+}
+
+.header .description {
+  font-size: 14px !important;
+}
+
+.formCard {
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
