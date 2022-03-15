@@ -15,7 +15,6 @@ import {
   Button,
 } from "antd";
 
-
 import { getPointVente } from "../../../services/PointVente";
 
 import * as classes from "./Evaluation.module.css";
@@ -93,8 +92,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
     const getptVt = async () => {
       try {
         const { data } = await axios.get(
-          "pt_de_vente/getByID.php?id=" +
-          ptVenteID
+          "pt_de_vente/getByID.php?id=" + ptVenteID
         );
         setSelectedPointVente(data);
       } catch (error) {
@@ -133,18 +131,17 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             id_question: prop,
             id_client: EvaluationData.login,
             reponse: values[prop],
-            id_pt_de_vente: selectedPointVente.id
-          }
+            id_pt_de_vente: selectedPointVente.id,
+          };
 
-
-          axios.post('evaluation/create_ev.php', evaluationItem)
-            .then((res => console.log(res)))
+          axios
+            .post("evaluation/create_ev.php", evaluationItem)
+            .then((res) => console.log(res));
         }
       })
       .finally(() => {
         setEvalution(true);
-      })
-
+      });
   };
 
   return (
@@ -188,7 +185,10 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
                 },
               ]}
             >
-              <Select placeholder={"Sélectionner"} onChange={(e) => setSelectedPointVente(e)} >
+              <Select
+                placeholder={"Sélectionner"}
+                onChange={(e) => setSelectedPointVente(e)}
+              >
                 {pointVente &&
                   pointVente.body?.map((el) => (
                     <Option key={el.id} value={el.nom}>
@@ -221,6 +221,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           >
             <Radio.Group name="sexe">
               <Radio value="F"> Femme</Radio>
+              <br />
               <Radio value="H">Homme </Radio>
             </Radio.Group>
           </Form.Item>
@@ -270,14 +271,30 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             ]}
           >
             <Select name="region" placeholder={"Sélectionner"}>
+              <Option value={"Nabeul"}>Nabeul</Option>
+              <Option value={"Zagoune"}>Zagoune</Option>
               <Option value={"Tunis"}>Tunis</Option>
               <Option value={"Ariana"}>Ariana</Option>
               <Option value={"Ben Arous"}>Ben Arous</Option>
               <Option value={"Bizerte"}>Bizerte</Option>
               <Option value={"Manouba"}>Manouba</Option>
+              <Option value={"Sousse"}>Sousse</Option>
+              <Option value={"Mounastir"}>Mounastir</Option>
               <Option value={"Jendouba"}>Jendouba</Option>
-              <Option value={"Le_Kef"}>Le Kef</Option>
-              <Option value={""}>Manouba</Option>
+              <Option value={"Seliana"}>Seliana</Option>
+              <Option value={"Beja"}>Beja</Option>
+              <Option value={"Le Kef"}>Le Kef</Option>
+              <Option value={"Ben Arous"}>Ben Arous</Option>
+              <Option value={"Tatouine"}>Tatouine</Option>
+              <Option value={"Gbeli"}>Gbeli</Option>
+              <Option value={"Kairouane"}>Kairouane</Option>
+              <Option value={"Gafsa"}>Gafsa</Option>
+              <Option value={"Tozeur"}>Tozeur</Option>
+              <Option value={"Mednine"}>Mednine</Option>
+              <Option value={"Sfax"}>Sfax</Option>
+              <Option value={"Mahdia"}>Mahdia</Option>
+              <Option value={"Sidi Bouzid"}>Sidi Bouzid</Option>
+              <Option value={"Gabes"}>Gabes</Option>
             </Select>
           </Form.Item>
         </Card>
@@ -386,7 +403,6 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
               <br />
               <Radio value="Cher">Cher</Radio>
             </Radio.Group>
-
           </Form.Item>
         </Card>
         <Card
@@ -394,28 +410,26 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           align="left"
           hoverable
           title="Les serveurs de cet point de vente sont ? *"
-          style={{ display: "table-caption" }}
-
         >
-          <Form.Item name="serveurs">
+          <Form.Item style={{ display: "table-caption" }} name="serveurs">
             <Checkbox.Group options={serveurs} name="serveurs" />
           </Form.Item>
         </Card>
         <Card
+          style={{ display: "table-caption" }}
           className={classes.formCard}
           align="left"
           hoverable
           title="Vos commandes sont généralement pour : *"
-          style={{ display: "table-caption" }}
-
         >
-          <Form.Item name="commandes_type">
-
+          <Form.Item
+            style={{ display: "table-caption;" }}
+            name="commandes_type"
+          >
             <Checkbox.Group
               options={commandes_type}
               name="commandes_type"
             ></Checkbox.Group>
-
           </Form.Item>
         </Card>
 
@@ -424,9 +438,11 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           hoverable
           className={classes.formCard}
           title="Vous passez votre commande de produits selon : *"
-          style={{ display: "table-caption" }}
         >
-          <Form.Item name="commandes_cause">
+          <Form.Item
+            style={{ display: "table-caption;" }}
+            name="commandes_cause"
+          >
             <Checkbox.Group options={commandes_cause} name="commandes_cause" />
           </Form.Item>
         </Card>
@@ -453,7 +469,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           title="Donnez une note de votre satisfaction pour cet point de vente : *"
         >
           <Form.Item name="satisfaction_vente">
-            <Rate name="satisfaction_vente" allowHalf defaultValue={'0'} />
+            <Rate name="satisfaction_vente" allowHalf defaultValue={"0"} />
           </Form.Item>
         </Card>
         <Card
@@ -477,7 +493,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           title="Si oui, et vous avez déjà commander en ligne, donnez votre dégréé de satisfaction pour le service de livraison"
         >
           <Form.Item name="satisfaction_livraison">
-            <Rate name="satisfaction_livraison" allowHalf defaultValue={'0'} />
+            <Rate name="satisfaction_livraison" allowHalf defaultValue={"0"} />
           </Form.Item>
         </Card>
         <Card

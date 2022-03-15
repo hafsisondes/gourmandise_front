@@ -70,6 +70,7 @@ const Steps = () => {
           ),
         },
       ]);
+
     setCurrentStep(1);
   }, [identified]);
 
