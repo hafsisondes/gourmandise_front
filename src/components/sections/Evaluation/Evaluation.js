@@ -411,19 +411,21 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           hoverable
           title="Les serveurs de cet point de vente sont ? *"
         >
-          <Form.Item style={{ display: "table-caption" }} name="serveurs">
+          <Form.Item
+            style={{ display: "table-caption", width: "200px" }}
+            name="serveurs"
+          >
             <Checkbox.Group options={serveurs} name="serveurs" />
           </Form.Item>
         </Card>
         <Card
-          style={{ display: "table-caption" }}
           className={classes.formCard}
           align="left"
           hoverable
           title="Vos commandes sont généralement pour : *"
         >
           <Form.Item
-            style={{ display: "table-caption;" }}
+            style={{ display: "table-caption", width: "200px" }}
             name="commandes_type"
           >
             <Checkbox.Group
@@ -440,7 +442,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           title="Vous passez votre commande de produits selon : *"
         >
           <Form.Item
-            style={{ display: "table-caption;" }}
+            style={{ display: "table-caption", width: "200px" }}
             name="commandes_cause"
           >
             <Checkbox.Group options={commandes_cause} name="commandes_cause" />

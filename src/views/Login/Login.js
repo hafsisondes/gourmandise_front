@@ -25,7 +25,6 @@ const Login = ({ setIdentified, EvaluationData, setEvaluationData }) => {
   };
 
   const responseGoogle = (response) => {
-    console.log(response);
     setIdentified(true);
     setEvaluationData({
       ...EvaluationData,
@@ -64,8 +63,6 @@ const Login = ({ setIdentified, EvaluationData, setEvaluationData }) => {
           />
         ) : (
           <Input
-            minLength={6}
-            maxLength={8}
             autoFocus
             // disabled={login ? true : false}
             type={"email"}
