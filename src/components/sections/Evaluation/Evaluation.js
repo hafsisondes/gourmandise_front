@@ -206,7 +206,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             <Select placeholder={"Sélectionner Gourmandise"} onChange={(e) => setSelectedPointVente(e)} style={{ width: "100%" }}>
               <Option value="1">GOURMANDISE - Tunis</Option>
               <Option value="2">GOURMANDISE - Menzah</Option>
-              <Option value="3" >GOURMANDISE - Bardoo</Option>
+              <Option value="3" >GOURMANDISE - Bardo</Option>
               <Option value="4">GOURMANDISE - Manar 3</Option>
               <Option value="5">GOURMANDISE - Marsa</Option>
               <Option value="6">GOURMANDISE - Megrine</Option>
@@ -272,7 +272,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             <Radio.Group name="age">
               <Radio value={"-18"}>moins de 18</Radio>
               <br />
-              <Radio value={"12-25"}>entre 12 et 25</Radio>
+              <Radio value={"18-25"}>entre 18 et 25</Radio>
               <br />
               <Radio value={"26-36"}>entre 26 et 36</Radio>
               <br />
@@ -356,7 +356,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Comment trouvez vous le service de cet point de vente ? *"
         >
-          <Form.Item name="service">
+          <Form.Item name="service"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis sur le  service !",
+              },
+            ]}>
             <Radio.Group name="service">
               <Radio value="Excellent"> Excellent</Radio>
               <br />
@@ -372,7 +378,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Comment trouvez vous cet espace de vente ? *"
         >
-          <Form.Item name="avis_espace">
+          <Form.Item name="avis_espace"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis sur le  l'espace !",
+              },
+            ]}>
             <Radio.Group name="avis_espace">
               <Radio value="Spacieux"> Spacieux</Radio>
               <br />
@@ -388,7 +400,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Comment trouvez vous la propreté de cet espace de vente ?"
         >
-          <Form.Item name="proprete_espace">
+          <Form.Item name="proprete_espace"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Radio.Group name="proprete_espace">
               <Radio value="Tres_propre">Très propre</Radio>
               <br />
@@ -405,7 +423,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           hoverable
           title="La modernité de cet espace de vente est : *"
         >
-          <Form.Item name="modernite">
+          <Form.Item name="modernite"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Radio.Group name="modernite">
               <Radio value="Tres_moderne">Très moderne</Radio>
               <br />
@@ -422,7 +446,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           hoverable
           title="Comment trouvez vous les prix : *"
         >
-          <Form.Item name="prix">
+          <Form.Item name="prix"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis sur le prix !",
+              },
+            ]}>
             <Radio.Group name="prix">
               <Radio value="Raisonnable">Raisonnable</Radio>
               <br />
@@ -442,6 +472,12 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           <Form.Item
             style={{ display: "table-caption", width: "200px" }}
             name="serveurs"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}
           >
             <Checkbox.Group options={serveurs} name="serveurs" />
           </Form.Item>
@@ -455,6 +491,12 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           <Form.Item
             style={{ display: "table-caption", width: "200px" }}
             name="commandes_type"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}
           >
             <Checkbox.Group
               options={commandes_type}
@@ -472,6 +514,12 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           <Form.Item
             style={{ display: "table-caption", width: "200px" }}
             name="commandes_cause"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}
           >
             <Checkbox.Group options={commandes_cause} name="commandes_cause" />
           </Form.Item>
@@ -482,7 +530,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Vous êtes satisfaits des produits commandés : *"
         >
-          <Form.Item name="satisfaction_client">
+          <Form.Item name="satisfaction_client"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Radio.Group name="satisfaction_client">
               <Radio value="trés Satisfait">Très satisfaits</Radio>
               <br />
@@ -498,7 +552,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Donnez une note de votre satisfaction pour cet point de vente : *"
         >
-          <Form.Item name="satisfaction_vente">
+          <Form.Item name="satisfaction_vente"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Rate name="satisfaction_vente" allowHalf defaultValue={"0"} />
           </Form.Item>
         </Card>
@@ -508,7 +568,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Savez vous que gourmandise a un site de commande en ligne : *"
         >
-          <Form.Item name="commandes_ligne">
+          <Form.Item name="commandes_ligne"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Radio.Group name="commandes_ligne">
               <Radio value={"Oui"}>Oui</Radio>
               <br />
@@ -522,7 +588,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Si oui, et vous avez déjà commander en ligne, donnez votre dégréé de satisfaction pour le service de livraison"
         >
-          <Form.Item name="satisfaction_livraison">
+          <Form.Item name="satisfaction_livraison"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Rate name="satisfaction_livraison" allowHalf defaultValue={"0"} />
           </Form.Item>
         </Card>
@@ -532,7 +604,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Est ce que vous aimez : *"
         >
-          <Form.Item name="type_commande">
+          <Form.Item name="type_commande"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Radio.Group name="type_commande">
               <Radio value={"ligne"}>passer des commandes en ligne</Radio>
               <br />
@@ -546,7 +624,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Est ce que la commande est : *"
         >
-          <Form.Item name="commandes_avis">
+          <Form.Item name="commandes_avis"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Radio.Group name="commandes_avis">
               <Radio value={"Délicieuse"}>Délicieuse</Radio>
               <br />
@@ -562,7 +646,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Qu'est ce que vous proposez pour améliorer notre service ?"
         >
-          <Form.Item name="proposition">
+          <Form.Item name="proposition"
+            rules={[
+              {
+                required: true,
+                message: "Donnez votre avis !",
+              },
+            ]}>
             <Input name="proposition" size="large" type="text" />
           </Form.Item>
         </Card>

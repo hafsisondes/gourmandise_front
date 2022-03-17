@@ -109,7 +109,7 @@ const Steps = () => {
         ) : (
           <Result
             icon={<SmileOutlined style={{ color: "#bf9a62b5" }} />}
-            title="Great, we have done all the operations!"
+            title="Merci pour vos réponses vous pouvez visiter le site pour plus d'informations!"
             extra={
               <Button
                 style={{ color: "#bf9a62" }}
