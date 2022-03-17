@@ -80,6 +80,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
   const [selectedPointVente, setSelectedPointVente] = useState(null);
   const { ptVenteID } = useParams();
   const [form] = Form.useForm();
+
   useEffect(() => {
     const request = async () => {
       const data = await getPointVente();
@@ -87,6 +88,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
     };
     request();
   }, []);
+
 
   useEffect(() => {
     const getptVt = async () => {
@@ -131,7 +133,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             id_question: prop,
             id_client: EvaluationData.login,
             reponse: values[prop],
-            id_pt_de_vente: selectedPointVente.id,
+            id_pt_de_vente: selectedPointVente,
           };
 
           axios
