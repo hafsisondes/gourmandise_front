@@ -58,26 +58,6 @@ const Steps = () => {
     identified === true &&
       setSteps([
         ...steps,
-        {
-          name: "Trouvez votre Gourmandise",
-          component: (
-            <QrCodeScan
-              EvaluationData={EvaluationData}
-              setEvaluationData={setEvaluationData}
-              identified={identified}
-              setLocalisation={setLocalisation}
-            />
-          ),
-        },
-      ]);
-
-    setCurrentStep(1);
-  }, [identified]);
-
-  useEffect(() => {
-    localisation === true &&
-      setSteps([
-        ...steps,
 
         {
           name: "Evaluez",
@@ -86,6 +66,25 @@ const Steps = () => {
               EvaluationData={EvaluationData}
               setEvaluationData={setEvaluationData}
               setEvalution={setEvalution}
+            />
+          ),
+        },
+      ]);
+    setCurrentStep(1);
+  }, [identified]);
+
+  useEffect(() => {
+    localisation === true &&
+      setSteps([
+        ...steps,
+        {
+          name: "Trouvez votre Gourmandise",
+          component: (
+            <QrCodeScan
+              EvaluationData={EvaluationData}
+              setEvaluationData={setEvaluationData}
+              identified={identified}
+              setLocalisation={setLocalisation}
             />
           ),
         },

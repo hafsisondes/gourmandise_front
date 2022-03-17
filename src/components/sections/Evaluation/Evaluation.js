@@ -170,21 +170,19 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           hoverable
           className={classes.formCard}
           title={
-            selectedPointVente
-              ? selectedPointVente.nom
-              : "Quel point de vente ou espace de gourmandise le plus proche de vous ? *"
+            "Quel point de vente ou espace de gourmandise le plus proche de vous ? *"
           }
+        > <Form.Item
+          name="local"
+          rules={[
+            {
+              required: true,
+              message: "Veuiliez Scanner !",
+            },
+          ]}
         >
-          {!selectedPointVente ? (
-            <Form.Item
-              name="local"
-              rules={[
-                {
-                  required: true,
-                  message: "Veuiliez Scanner !",
-                },
-              ]}
-            >
+            {/* {!selectedPointVente ? (
+           
               <Select
                 placeholder={"Sélectionner"}
                 onChange={(e) => setSelectedPointVente(e)}
@@ -196,13 +194,41 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
                     </Option>
                   ))}
               </Select>
-            </Form.Item>
+         
           ) : (
             <>
               <Text strong> {selectedPointVente.region}</Text>
               <Text strong> {selectedPointVente.type}</Text>
             </>
-          )}
+          )} */}
+            <Select placeholder={"Sélectionner Gourmandise"} onChange={(e) => setSelectedPointVente(e)} style={{ width: "100%" }}>
+              <Option value="1">GOURMANDISE - Tunis</Option>
+              <Option value="2">GOURMANDISE - Menzah</Option>
+              <Option value="3" >GOURMANDISE - Bardoo</Option>
+              <Option value="4">GOURMANDISE - Manar 3</Option>
+              <Option value="5">GOURMANDISE - Marsa</Option>
+              <Option value="6">GOURMANDISE - Megrine</Option>
+              <Option value="7">GOURMANDISE - Aouina</Option>
+              <Option value="8">GOURMANDISE - Center urbain nord</Option>
+              <Option value="9">GOURMANDISE - Aéroport Tunis carthage </Option>
+              <Option value="10">GOURMANDISE - lac 1</Option>
+              <Option value="11">GOURMANDISE - lac 2</Option>
+              <Option value="12">GOURMANDISE - Ezzahra</Option>
+              <Option value="13">GOURMANDISE - Ennasr 2</Option>
+              <Option value="14">GOURMANDISE - Marsa residence</Option>
+              <Option value="15">GOURMANDISE - Bizerte</Option>
+              <Option value="16">GOURMANDISE - Tenior</Option>
+              <Option value="17">GOURMANDISE - Taparura</Option>
+              <Option value="18">GOURMANDISE - Bouzayene</Option>
+              <Option value="19">GOURMANDISE - Nbaeul</Option>
+              <Option value="20">GOURMANDISE - Mahdia</Option>
+              <Option value="21">GOURMANDISE - Bouzayene</Option>
+              <Option value="22">GOURMANDISE - Hamam Sousse</Option>
+              <Option value="23">GOURMANDISE - The pearl</Option>
+              <Option value="24">GOURMANDISE - Gabes</Option>
+              <Option value="25">GOURMANDISE - Djerba</Option>
+            </Select>
+          </Form.Item>
         </Card>
         <Card
           align="left"
