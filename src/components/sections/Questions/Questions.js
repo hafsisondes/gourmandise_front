@@ -1,5 +1,6 @@
 import React from 'react'
-import { Form, Input, InputNumber, Button } from 'antd';
+import { Form, Input, InputNumber, Button, Select, message } from 'antd';
+import axios from '../../../services/axios';
 
 
 
@@ -16,31 +17,85 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
+const { Option } = Select;
+
 const Questions = () => {
-    const onFinish = (values) => {
+    const [form] = Form.useForm()
+    const onFinish = async (values) => {
         console.log(values);
+        values.reponse = "reponse";
+        values.id_question = new Date();
+        try {
+            const { data } = await axios.post('/question/create_qts.php', values);
+            data && message.success('utilisateur Ajouter avec success');
+            form.resetFields();
+        } catch (error) {
+            message.error('verfier vos données');
+            console.error(error)
+        }
     };
 
+
     return (
-        <Form wrapperCol={16} layout="vertical" labelAlign='left' name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-            <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
+        <Form
+            ref={form}
+            wrapperCol={16}
+            layout="vertical"
+            labelAlign="left"
+            name="questions"
+            onFinish={onFinish}
+            validateMessages={validateMessages}
+        >
+            <Form.Item
+                name={"label"}
+                label="label"
+                rules={[
+                    {
+                        required: true,
+                        message: "Tapez le nom de poit de vente !",
+                    },
+                ]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
-                <Input />
+            <Form.Item
+                name="type"
+                rules={[
+                    {
+                        required: true,
+                        message: "Sélectionner le type !",
+                    },
+                ]}
+            >
+                <Select name="type" placeholder={"Choisir catégorie de question"}>
+                    <Option value={"Services"}>Services</Option>
+                    <Option value={"Local"}>Local</Option>
+                    <Option value={"Serveurs"}>Serveurs</Option>
+                    <Option value={"Prix"}>Prix</Option>
+                    <Option value={"Autre"}>Autre</Option>
+                </Select>
             </Form.Item>
-            <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
-                <InputNumber />
+            <Form.Item
+                name={"type_reponse"}
+                label="Age"
+                rules={[{ required: true, message: "Choisir le type de réponse" }]}
+            >
+                <Select placeholder="Type de réponse"   >
+                    <Option value="single" >Seul reponse</Option>
+                    <Option value="multi" >Multi choix</Option>
+                </Select>
             </Form.Item>
-            <Form.Item name={['user', 'website']} label="Website">
-                <Input />
-            </Form.Item>
-            <Form.Item name={['user', 'introduction']} label="Introduction">
-                <Input.TextArea />
-            </Form.Item>
-            <Form.Item >
+            {/* <Form.Item
+                name={"reponse"}
+                label="Age"
+                rules={[{ required: true, message: "Tapez les réponses" }]}
+            >
+               
+                
+            </Form.Item> */}
+            <Form.Item>
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    Ajouter
                 </Button>
             </Form.Item>
         </Form>

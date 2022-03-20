@@ -1,5 +1,6 @@
 import React from "react";
-import { Form, Input, InputNumber, Button, Select } from "antd";
+import { Form, Input, InputNumber, Button, Select, message } from "antd";
+import axios from "../../../services/axios";
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -15,12 +16,23 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 const { Option } = Select;
 const Questions = () => {
-  const onFinish = (values) => {
+  const [form] = Form.useForm();
+  const onFinish = async (values) => {
     console.log(values);
+    values.nbr_visite = 0;
+    try {
+      const { data } = await axios.post('/pt_de_vente/create.php', values);
+      data && message.success('utilisateur Ajouter avec success');
+      form.resetFields();
+    } catch (error) {
+      message.error('verfier vos données');
+      console.error(error)
+    }
   };
 
   return (
     <Form
+      ref={form}
       wrapperCol={16}
       layout="vertical"
       labelAlign="left"
@@ -29,7 +41,7 @@ const Questions = () => {
       validateMessages={validateMessages}
     >
       <Form.Item
-        name={"Label"}
+        name={"nom"}
         label="label"
         rules={[
           {
@@ -77,21 +89,19 @@ const Questions = () => {
         </Select>
       </Form.Item>
       <Form.Item
-        name={["user", "age"]}
+        name={"type"}
         label="Age"
-        rules={[{ type: "number", min: 0, max: 99 }]}
+        rules={[{ required: true, message: "Choisir le type" }]}
       >
-        <InputNumber />
+        <Select placeholder="Type de service  "   >
+          <Option value="Café" >Café</Option>
+          <Option value="Patteserie" >Patteserie</Option>
+        </Select>
       </Form.Item>
-      <Form.Item name={["user", "website"]} label="Website">
-        <Input />
-      </Form.Item>
-      <Form.Item name={["user", "introduction"]} label="Introduction">
-        <Input.TextArea />
-      </Form.Item>
+
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Submit
+          Ajouter
         </Button>
       </Form.Item>
     </Form>
