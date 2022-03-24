@@ -79,7 +79,7 @@ const Header = ({
   );
 
   return (
-    <header {...props} className={classes}>
+    <header {...props} className={classes} style={{ background: "#262626" }}>
       <div className="container">
         <div
           className={classNames(
@@ -111,6 +111,11 @@ const Header = ({
                       navPosition && `header-nav-${navPosition}`
                     )}
                   >
+                    <li>
+                      <Link to="/home" onClick={closeMenu}>
+                        Acceuil
+                      </Link>
+                    </li>
                     <li>
                       <Link to="/gestion" onClick={closeMenu}>
                         Gestion des données
