@@ -20,7 +20,7 @@ const UserRole = () => {
         md={{ span: 8 }}
         align="center"
       >
-        <Link to="/admin">
+        <Link to="/home">
           <span>Administration</span>
           <ArrowRightOutlined
             style={{ color: "#c6a675", marginLeft: "15px" }}

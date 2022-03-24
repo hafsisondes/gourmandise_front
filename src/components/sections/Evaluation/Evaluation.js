@@ -222,7 +222,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
               <Option value="16">GOURMANDISE - Tenior</Option>
               <Option value="17">GOURMANDISE - Taparura</Option>
               <Option value="18">GOURMANDISE - Bouzayene</Option>
-              <Option value="19">GOURMANDISE - Nbaeul</Option>
+              <Option value="19">GOURMANDISE - Nabeul</Option>
               <Option value="20">GOURMANDISE - Mahdia</Option>
               <Option value="21">GOURMANDISE - Bouzayene</Option>
               <Option value="22">GOURMANDISE - Hamam Sousse</Option>
@@ -646,13 +646,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           className={classes.formCard}
           title="Qu'est ce que vous proposez pour améliorer notre service ?"
         >
-          <Form.Item name="proposition"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
+          <Form.Item name="proposition">
             <Input name="proposition" size="large" type="text" />
           </Form.Item>
         </Card>
