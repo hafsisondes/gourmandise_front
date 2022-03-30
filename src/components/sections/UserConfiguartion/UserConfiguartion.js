@@ -4,7 +4,7 @@ import axios from '../../../services/axios';
 
 
 
-const UserConfiguartion = () => {
+const UserConfiguartion = ({ getUsersList }) => {
 
     const onFinish = async (values) => {
         console.log('Success:', values);
@@ -18,6 +18,7 @@ const UserConfiguartion = () => {
         try {
             const { data } = await axios.post('user/create.php', newUser);
             data && message.success('utilisateur Ajouter avec success');
+            getUsersList()
         } catch (error) {
             message.error('verfier vos données');
             console.error(error)
@@ -63,11 +64,11 @@ const UserConfiguartion = () => {
                 name="password"
                 rules={[{ required: true, message: 'Tpaez votre mot de passe!' }]}
             >
-                <Input.Password />
+                <Input.Password placeholder='Mot de passe' />
             </Form.Item>
             <Form.Item
                 label="Confirmer mot de passe"
-                name="password"
+                name="confirmPpassword"
                 rules={[{ required: true, message: 'Confirmer votre mot de passe!' }]}
             >
                 <Input.Password placeholder='Retapez votre mot de passe' />

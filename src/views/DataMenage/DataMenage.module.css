@@ -1,5 +1,10 @@
 .container {
   padding: 40px;
   background-color: #fff;
-  height: 80vh;
+  min-height: 80vh;
+}
+
+.list {
+  max-height: 70vh;
+  overflow: auto;
 }

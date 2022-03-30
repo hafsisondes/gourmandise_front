@@ -18,17 +18,16 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 const { Option } = Select;
-
-const Questions = () => {
+const { TextArea } = Input
+const Questions = ({ getQuestionList }) => {
     const [form] = Form.useForm()
     const onFinish = async (values) => {
         console.log(values);
-        values.reponse = "reponse";
-        values.id_question = new Date();
         try {
             const { data } = await axios.post('/question/create_qts.php', values);
             data && message.success('utilisateur Ajouter avec success');
             form.resetFields();
+            getQuestionList()
         } catch (error) {
             message.error('verfier vos données');
             console.error(error)
@@ -48,18 +47,19 @@ const Questions = () => {
         >
             <Form.Item
                 name={"label"}
-                label="label"
+                label="Texte de question"
                 rules={[
                     {
                         required: true,
-                        message: "Tapez le nom de poit de vente !",
+                        message: "Tapez le question !",
                     },
                 ]}
             >
-                <Input />
+                <TextArea />
             </Form.Item>
             <Form.Item
                 name="type"
+                label="Catégorie"
                 rules={[
                     {
                         required: true,
@@ -77,7 +77,7 @@ const Questions = () => {
             </Form.Item>
             <Form.Item
                 name={"type_reponse"}
-                label="Age"
+                label="Type de reponse"
                 rules={[{ required: true, message: "Choisir le type de réponse" }]}
             >
                 <Select placeholder="Type de réponse"   >
@@ -85,14 +85,14 @@ const Questions = () => {
                     <Option value="multi" >Multi choix</Option>
                 </Select>
             </Form.Item>
-            {/* <Form.Item
+            <Form.Item
+                help="Séparez les réponses par #"
                 name={"reponse"}
-                label="Age"
+                label="Réponses"
                 rules={[{ required: true, message: "Tapez les réponses" }]}
             >
-               
-                
-            </Form.Item> */}
+                <TextArea />
+            </Form.Item>
             <Form.Item>
                 <Button type="primary" htmlType="submit">
                     Ajouter

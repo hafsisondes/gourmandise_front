@@ -15,7 +15,7 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 const { Option } = Select;
-const Questions = () => {
+const Questions = ({ getPtVenteList }) => {
   const [form] = Form.useForm();
   const onFinish = async (values) => {
     console.log(values);
@@ -24,6 +24,7 @@ const Questions = () => {
       const { data } = await axios.post('/pt_de_vente/create.php', values);
       data && message.success('utilisateur Ajouter avec success');
       form.resetFields();
+      getPtVenteList();
     } catch (error) {
       message.error('verfier vos données');
       console.error(error)
@@ -42,7 +43,7 @@ const Questions = () => {
     >
       <Form.Item
         name={"nom"}
-        label="label"
+        label="Label"
         rules={[
           {
             required: true,
@@ -50,10 +51,11 @@ const Questions = () => {
           },
         ]}
       >
-        <Input />
+        <Input placeholder="Label" />
       </Form.Item>
       <Form.Item
         name="region"
+        label="Région"
         rules={[
           {
             required: true,
@@ -61,7 +63,7 @@ const Questions = () => {
           },
         ]}
       >
-        <Select name="region" placeholder={"Sélectionner"}>
+        <Select name="region" placeholder={"Sélectionner la region"}>
           <Option value={"Nabeul"}>Nabeul</Option>
           <Option value={"Zagoune"}>Zagoune</Option>
           <Option value={"Tunis"}>Tunis</Option>
@@ -90,7 +92,7 @@ const Questions = () => {
       </Form.Item>
       <Form.Item
         name={"type"}
-        label="Age"
+        label="Services"
         rules={[{ required: true, message: "Choisir le type" }]}
       >
         <Select placeholder="Type de service  "   >
