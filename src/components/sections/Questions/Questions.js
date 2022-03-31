@@ -68,11 +68,12 @@ const Questions = ({ getQuestionList }) => {
                 ]}
             >
                 <Select name="type" placeholder={"Choisir catégorie de question"}>
-                    <Option value={"Services"}>Services</Option>
-                    <Option value={"Local"}>Local</Option>
-                    <Option value={"Serveurs"}>Serveurs</Option>
-                    <Option value={"Prix"}>Prix</Option>
-                    <Option value={"Autre"}>Autre</Option>
+                    <Option value={"services"}>Services</Option>
+                    <Option value={"local"}>Local</Option>
+                    <Option value={"serveurs"}>Serveurs</Option>
+                    <Option value={"prix"}>Prix</Option>
+                    <Option value={"personnel"}>Personnel</Option>
+                    <Option value={"sutre"}>Autre</Option>
                 </Select>
             </Form.Item>
             <Form.Item
@@ -83,6 +84,8 @@ const Questions = ({ getQuestionList }) => {
                 <Select placeholder="Type de réponse"   >
                     <Option value="single" >Seul reponse</Option>
                     <Option value="multi" >Multi choix</Option>
+                    <Option value="list" >Liste</Option>
+                    <Option value="text" >Text</Option>
                 </Select>
             </Form.Item>
             <Form.Item

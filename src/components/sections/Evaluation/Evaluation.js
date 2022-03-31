@@ -15,7 +15,7 @@ import {
   Button,
 } from "antd";
 
-import { getPointVente } from "../../../services/PointVente";
+import { getPointVente, getQuestion } from "../../../services/PointVente";
 
 import * as classes from "./Evaluation.module.css";
 
@@ -77,6 +77,7 @@ const commandes_cause = [
 
 const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
   const [pointVente, setPointVente] = useState(null);
+  const [question, setQuestion] = useState(null);
   const [selectedPointVente, setSelectedPointVente] = useState(null);
   const { ptVenteID } = useParams();
   const [form] = Form.useForm();
@@ -86,23 +87,23 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
       const data = await getPointVente();
       setPointVente(data);
     };
+
     request();
   }, []);
 
-
   useEffect(() => {
-    const getptVt = async () => {
-      try {
-        const { data } = await axios.get(
-          "pt_de_vente/getByID.php?id=" + ptVenteID
-        );
-        setSelectedPointVente(data);
-      } catch (error) {
-        console.log(error);
-      }
+    const request = async () => {
+      const data = await getQuestion();
+      const newData = data.data?.map(item =>
+        item.reponse = item.reponse.split('#')
+      )
+
+      setQuestion(data);
+
     };
-    getptVt();
-  }, [ptVenteID]);
+
+    request();
+  }, []);
 
   useEffect(() => {
     console.log(selectedPointVente);
@@ -183,8 +184,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             },
           ]}
         >
-            {/* {!selectedPointVente ? (
-           
+            {
               <Select
                 placeholder={"Sélectionner"}
                 onChange={(e) => setSelectedPointVente(e)}
@@ -196,42 +196,12 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
                     </Option>
                   ))}
               </Select>
-         
-          ) : (
-            <>
-              <Text strong> {selectedPointVente.region}</Text>
-              <Text strong> {selectedPointVente.type}</Text>
-            </>
-          )} */}
-            <Select placeholder={"Sélectionner Gourmandise"} onChange={(e) => setSelectedPointVente(e)} style={{ width: "100%" }}>
-              <Option value="1">GOURMANDISE - Tunis</Option>
-              <Option value="2">GOURMANDISE - Menzah</Option>
-              <Option value="3" >GOURMANDISE - Bardo</Option>
-              <Option value="4">GOURMANDISE - Manar 3</Option>
-              <Option value="5">GOURMANDISE - Marsa</Option>
-              <Option value="6">GOURMANDISE - Megrine</Option>
-              <Option value="7">GOURMANDISE - Aouina</Option>
-              <Option value="8">GOURMANDISE - Center urbain nord</Option>
-              <Option value="9">GOURMANDISE - Aéroport Tunis carthage </Option>
-              <Option value="10">GOURMANDISE - lac 1</Option>
-              <Option value="11">GOURMANDISE - lac 2</Option>
-              <Option value="12">GOURMANDISE - Ezzahra</Option>
-              <Option value="13">GOURMANDISE - Ennasr 2</Option>
-              <Option value="14">GOURMANDISE - Marsa residence</Option>
-              <Option value="15">GOURMANDISE - Bizerte</Option>
-              <Option value="16">GOURMANDISE - Tenior</Option>
-              <Option value="17">GOURMANDISE - Taparura</Option>
-              <Option value="18">GOURMANDISE - Bouzayene</Option>
-              <Option value="19">GOURMANDISE - Nabeul</Option>
-              <Option value="20">GOURMANDISE - Mahdia</Option>
-              <Option value="21">GOURMANDISE - Bouzayene</Option>
-              <Option value="22">GOURMANDISE - Hamam Sousse</Option>
-              <Option value="23">GOURMANDISE - The pearl</Option>
-              <Option value="24">GOURMANDISE - Gabes</Option>
-              <Option value="25">GOURMANDISE - Djerba</Option>
-            </Select>
+
+            }
+
           </Form.Item>
         </Card>
+
         <Card
           align="left"
           hoverable
@@ -254,6 +224,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             </Radio.Group>
           </Form.Item>
         </Card>
+
         <Card
           align="left"
           hoverable
@@ -326,320 +297,50 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             </Select>
           </Form.Item>
         </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Combien de fois vous visitez cet point de vente par mois ? "
-        >
-          <Form.Item
-            name="nbr_visite"
-            rules={[
-              {
-                required: true,
-                message: "Sélectionner le nombre de visite !",
-              },
-            ]}
-          >
-            <Radio.Group name="nbr_visite">
-              <Radio value="-5"> moins de 5</Radio>
-              <br />
-              <Radio value="5-10">entre 5 et 10 fois </Radio>
-              <br />
-              <Radio value="10+">plus de 10 </Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Comment trouvez vous le service de cet point de vente ? *"
-        >
-          <Form.Item name="service"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis sur le  service !",
-              },
-            ]}>
-            <Radio.Group name="service">
-              <Radio value="Excellent"> Excellent</Radio>
-              <br />
-              <Radio value="Bon">Bon</Radio>
-              <br />
-              <Radio value="Mauvais">Mauvais </Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Comment trouvez vous cet espace de vente ? *"
-        >
-          <Form.Item name="avis_espace"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis sur le  l'espace !",
-              },
-            ]}>
-            <Radio.Group name="avis_espace">
-              <Radio value="Spacieux"> Spacieux</Radio>
-              <br />
-              <Radio value="Moyen">Moyen</Radio>
-              <br />
-              <Radio value="Non-spacieux">Non spacieux </Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Comment trouvez vous la propreté de cet espace de vente ?"
-        >
-          <Form.Item name="proprete_espace"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
-            <Radio.Group name="proprete_espace">
-              <Radio value="Tres_propre">Très propre</Radio>
-              <br />
-              <Radio value="Propre">Propre</Radio>
-              <br />
-              <Radio value="Non_propre">Non propre </Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
 
-        <Card
-          className={classes.formCard}
-          align="left"
-          hoverable
-          title="La modernité de cet espace de vente est : *"
-        >
-          <Form.Item name="modernite"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
-            <Radio.Group name="modernite">
-              <Radio value="Tres_moderne">Très moderne</Radio>
-              <br />
-              <Radio value="Normal">Normal</Radio>
-              <br />
-              <Radio value="Non_moderne">Non moderne</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
 
-        <Card
-          className={classes.formCard}
-          align="left"
-          hoverable
-          title="Comment trouvez vous les prix : *"
-        >
-          <Form.Item name="prix"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis sur le prix !",
-              },
-            ]}>
-            <Radio.Group name="prix">
-              <Radio value="Raisonnable">Raisonnable</Radio>
-              <br />
+        {
+          question &&
+          question.data?.map((item, index) =>
+            <Card
+              key={index}
+              align="left"
+              hoverable
+              className={classes.formCard}
+              title={item.label}
+            >
+              <Form.Item
+                name={item.id_question}
+                rules={[
+                  {
+                    required: true,
+                    message: "Champ obligatoire !",
+                  },
+                ]}
+              >
+                {
+                  item.type_reponse === "single" &&
+                  <Radio.Group name={item.id_question}>
+                    {
+                      item.reponse?.map(rep => <><Radio value={rep}> {rep}</Radio><br /></>)
+                    }
+                  </Radio.Group>
+                }
 
-              <Radio value="Excessivement_cher">Excessivement cher</Radio>
-              <br />
-              <Radio value="Cher">Cher</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
-        <Card
-          className={classes.formCard}
-          align="left"
-          hoverable
-          title="Les serveurs de cet point de vente sont ? *"
-        >
-          <Form.Item
-            style={{ display: "table-caption", width: "200px" }}
-            name="serveurs"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}
-          >
-            <Checkbox.Group options={serveurs} name="serveurs" />
-          </Form.Item>
-        </Card>
-        <Card
-          className={classes.formCard}
-          align="left"
-          hoverable
-          title="Vos commandes sont généralement pour : *"
-        >
-          <Form.Item
-            style={{ display: "table-caption", width: "200px" }}
-            name="commandes_type"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}
-          >
-            <Checkbox.Group
-              options={commandes_type}
-              name="commandes_type"
-            ></Checkbox.Group>
-          </Form.Item>
-        </Card>
+                {
+                  item.type_reponse === "multi" &&
+                  <Checkbox.Group options={serveurs} name={item.id_question} >
 
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Vous passez votre commande de produits selon : *"
-        >
-          <Form.Item
-            style={{ display: "table-caption", width: "200px" }}
-            name="commandes_cause"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}
-          >
-            <Checkbox.Group options={commandes_cause} name="commandes_cause" />
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Vous êtes satisfaits des produits commandés : *"
-        >
-          <Form.Item name="satisfaction_client"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
-            <Radio.Group name="satisfaction_client">
-              <Radio value="trés Satisfait">Très satisfaits</Radio>
-              <br />
-              <Radio value="Satisfait">Satisfait</Radio>
-              <br />
-              <Radio value="non Satisfait">Non satisfaits</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Donnez une note de votre satisfaction pour cet point de vente : *"
-        >
-          <Form.Item name="satisfaction_vente"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
-            <Rate name="satisfaction_vente" allowHalf defaultValue={"0"} />
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Savez vous que gourmandise a un site de commande en ligne : *"
-        >
-          <Form.Item name="commandes_ligne"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
-            <Radio.Group name="commandes_ligne">
-              <Radio value={"Oui"}>Oui</Radio>
-              <br />
-              <Radio value={"Non"}>Non</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Si oui, et vous avez déjà commander en ligne, donnez votre dégréé de satisfaction pour le service de livraison"
-        >
-          <Form.Item name="satisfaction_livraison"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
-            <Rate name="satisfaction_livraison" allowHalf defaultValue={"0"} />
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Est ce que vous aimez : *"
-        >
-          <Form.Item name="type_commande"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
-            <Radio.Group name="type_commande">
-              <Radio value={"ligne"}>passer des commandes en ligne</Radio>
-              <br />
-              <Radio value={"visite"}>visiter l'espace directement</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
-        <Card
-          align="left"
-          hoverable
-          className={classes.formCard}
-          title="Est ce que la commande est : *"
-        >
-          <Form.Item name="commandes_avis"
-            rules={[
-              {
-                required: true,
-                message: "Donnez votre avis !",
-              },
-            ]}>
-            <Radio.Group name="commandes_avis">
-              <Radio value={"Délicieuse"}>Délicieuse</Radio>
-              <br />
-              <Radio value={"Moyenne"}>Moyenne</Radio>
-              <br />
-              <Radio value={"Mauvaise"}>Mauvaise</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Card>
+                    {
+                      item.reponse?.map(rep => <><Checkbox value={rep}> {rep}</Checkbox><br /></>)
+                    }
+                  </Checkbox.Group>
+                }
+
+              </Form.Item>
+            </Card>
+          )
+        }
         <Card
           align="left"
           hoverable

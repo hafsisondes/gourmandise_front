@@ -57,6 +57,13 @@ const App = () => {
             component={DataMenage}
             layout={LayoutDefault}
           ></AppRoute>
+
+          <AppRoute
+            exact
+            path="/ev"
+            component={Evaluation}
+            layout={LayoutDefault}
+          />
         </Switch>
       )}
     />
