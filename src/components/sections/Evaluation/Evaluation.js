@@ -1,121 +1,62 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import axios from "../../../services/axios";
 
+// composant pour design 
 import {
   Card,
-  Checkbox,
   Radio,
   Space,
   Typography,
-  Rate,
   Input,
   Form,
   Select,
   Button,
 } from "antd";
-
+// import function to get data from database
 import { getPointVente, getQuestion } from "../../../services/PointVente";
-
+//CSS Module
 import * as classes from "./Evaluation.module.css";
 
+//Components 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-const serveurs = [
-  {
-    label: "Souriants",
-    value: "Souriants",
-  },
-  {
-    label: "Attentif",
-    value: "Attentif",
-  },
-  {
-    label: "Sympathiques",
-    value: "Sympathiques",
-  },
-  {
-    label: "Pas souriants",
-    value: "Pas_souriants",
-  },
-  {
-    label: "Nerveux",
-    value: "Nerveux",
-  },
-];
-
-const commandes_type = [
-  {
-    label: "Mariages et fêtes",
-    value: "mariages_fetes",
-  },
-  {
-    label: "Aid",
-    value: "aid",
-  },
-  {
-    label: "Consommation personnelle",
-    value: "consomommation_personnel",
-  },
-];
-
-const commandes_cause = [
-  {
-    label: "Le goût",
-    value: "gout",
-  },
-  {
-    label: "Le prix",
-    value: "prix",
-  },
-  {
-    label: "Consommation personnelle",
-    value: "consomommation_personnel",
-  },
-];
-
+//View evaluation
 const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
+  //Components state
   const [pointVente, setPointVente] = useState(null);
   const [question, setQuestion] = useState(null);
   const [selectedPointVente, setSelectedPointVente] = useState(null);
   const { ptVenteID } = useParams();
   const [form] = Form.useForm();
 
+  //get Point de vente
   useEffect(() => {
     const request = async () => {
       const data = await getPointVente();
       setPointVente(data);
     };
-
     request();
   }, []);
 
+  // Get list quetion
   useEffect(() => {
     const request = async () => {
       const data = await getQuestion();
       const newData = data.data?.map(item =>
         item.reponse = item.reponse.split('#')
       )
-
+      console.log(data);
       setQuestion(data);
-
     };
-
     request();
   }, []);
 
-  useEffect(() => {
-    console.log(selectedPointVente);
-  }, [selectedPointVente]);
-
-  useEffect(() => {
-    console.log(EvaluationData);
-  }, [EvaluationData]);
-
+  //Ajout evaluation 
   const onFinish = (values) => {
     setEvaluationData({ ...EvaluationData, evaluation: values });
-    console.log(values);
 
     const data = JSON.stringify({
       age: values.age,
@@ -124,19 +65,18 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
       email: EvaluationData.login,
     });
 
+    //Send data to database
     axios
       .post("client/create_cl.php", data)
-      .then((res) => console.log(res))
       .then(() => {
-        for (var prop in values) {
+        for (var question in values) {
           // console.log(`obj.${prop} = ${EvaluationData.evaluation[prop]}`);
           let evaluationItem = {
-            id_question: prop,
+            id_question: question,
             id_client: EvaluationData.login,
-            reponse: values[prop],
+            reponse: values[question],
             id_pt_de_vente: selectedPointVente,
           };
-
           axios
             .post("evaluation/create_ev.php", evaluationItem)
             .then((res) => console.log(res));
@@ -151,6 +91,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
     <div className={classes.container}>
       <div className={classes.backdropTop}></div>
       <div className={classes.backdropBottom}></div>
+
       <Space className={classes.header} draggable>
         <Title level={2} style={{ color: "#bf9a62" }}>
           Évaluation
@@ -191,7 +132,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
               >
                 {pointVente &&
                   pointVente.body?.map((el) => (
-                    <Option key={el.id} value={el.nom}>
+                    <Option key={el.id} value={el.id}>
                       {el.nom}
                     </Option>
                   ))}
@@ -320,22 +261,22 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
               >
                 {
                   item.type_reponse === "single" &&
-                  <Radio.Group name={item.id_question}>
+                  <Radio.Group >
                     {
-                      item.reponse?.map(rep => <><Radio value={rep}> {rep}</Radio><br /></>)
+                      item.reponse?.map(rep => <><Radio children={`${rep}`} value={`${rep}`}> {`${rep}`}</Radio><br /></>)
                     }
                   </Radio.Group>
                 }
 
-                {
+                {/* {
                   item.type_reponse === "multi" &&
-                  <Checkbox.Group options={serveurs} name={item.id_question} >
+                  <Checkbox.Group options={serveurs} name={"QS" + item.id_question} >
 
                     {
                       item.reponse?.map(rep => <><Checkbox value={rep}> {rep}</Checkbox><br /></>)
                     }
                   </Checkbox.Group>
-                }
+                } */}
 
               </Form.Item>
             </Card>
@@ -365,4 +306,6 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
     </div>
   );
 };
+
+
 export default Evaluation;

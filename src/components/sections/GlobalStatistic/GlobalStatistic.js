@@ -12,9 +12,9 @@ const GlobalStatistic = ({ title, description, value }) => {
         <Statistic
           title={description}
           value={value}
-          precision={2}
+          precision={0}
           valueStyle={{ color: "#3f8600" }}
-          prefix={<ArrowUpOutlined />}
+          suffix={" Visites"}
         />
       </Card>
     </div>

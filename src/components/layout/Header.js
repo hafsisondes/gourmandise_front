@@ -126,11 +126,11 @@ const Header = ({
                     <ul className="list-reset header-nav-right">
                       <li>
                         <Link
-                          to="#0"
+                          to="/"
                           className="button button-primary button-wide-mobile button-sm"
                           onClick={closeMenu}
                         >
-                          Configuration
+                          Home
                         </Link>
                       </li>
                     </ul>

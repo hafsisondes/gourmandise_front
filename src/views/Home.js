@@ -5,6 +5,8 @@ import * as classes from "./Home.module.css";
 import Dashboard from "../components/sections/Dashboard/Dashboard";
 import Footer from "../components/layout/Footer";
 
+
+//view Home
 const Home = () => {
   // arrow function components
   return (

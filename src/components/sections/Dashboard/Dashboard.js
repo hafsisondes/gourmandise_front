@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 //ANDT DESIGN COMPONENTS
 import { Card, Col, Row, List, Select, DatePicker } from "antd";
 //APP COMPONENTS
@@ -13,6 +13,8 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import axios from "../../../services/axios";
+import { useEffect } from "react";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -21,7 +23,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-const data = [
+const dataPt = [
   {
     title: "Gourmandise 1",
   },
@@ -55,61 +57,118 @@ export const options = {
   },
 };
 
-const labels = [
-  "Gourmandise 1",
-  "Gourmandise 2",
-  "Gourmandise 3",
-  "Gourmandise 4",
-  "Gourmandise 5",
-  "Gourmandise 6",
-  "Gourmandise 7",
-  "Gourmandise 8",
-  "Gourmandise 9",
-];
 
-export const dataChart = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: [25, 50, 10, 100, 150, 23, 85, 69, 70],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-  ],
-};
 
 const { Option } = Select;
 const Dashboard = () => {
+  const [pt_vente, setPt_vente] = useState([])
+  const [question, setQuestion] = useState([])
+  const [totalVisite, setTotalVisite] = useState(0)
+
+
+  const [questionValue, setQuestionValue] = useState(undefined);
+  const [ptVenteValue, setPtVenteValue] = useState(undefined);
+
+  const [dataChart, setdataChart] = useState({
+    datasets: [
+      {
+        label: "data",
+        data: [],
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  })
+
+  const getStatistiqueParams = async () => {
+    try {
+      const data = await axios.get('/statistique/getData.php');
+      console.log(data)
+      let ptVt = [...new Set(data.data.body?.map(item => item.nom))];
+      let qts = [...new Set(data.data.body?.map(item => item.labelQues))];
+      let nbrVisite = [...new Set(data.data.body?.map(item => item.id_client))];
+      setPt_vente(ptVt);
+      setQuestion(qts);
+      setTotalVisite(nbrVisite.length);
+    } catch (error) {
+      console.error(error)
+
+    }
+  }
+
+  const getDataChart = async () => {
+    try {
+      const data = await axios.get('/statistique?ptVente=' + ptVenteValue + '&question=' + questionValue);
+      console.log(data.data)
+
+
+
+      const dataNew = [];
+      const labels = [];
+      data.data.body.forEach(element => {
+        dataNew.push(element.nbr)
+        labels.push(element.reponse)
+      })
+      console.log(dataNew);
+      console.log(labels);
+      console.log(dataNew)
+      setdataChart({
+        labels,
+        datasets: [
+          {
+            ...dataChart.datasets[0], data: dataNew
+          }
+        ]
+      })
+    } catch (error) {
+
+    }
+  }
+
+
+  useEffect(() => {
+    getStatistiqueParams()
+  }, [])
+
+  useEffect(() => {
+    getDataChart()
+  }, [totalVisite])
+
   return (
     <Row gutter={[30, 30]}>
       <Col xs={{ span: 24 }}>
         <Card title="Paramétre de statistique">
           <Col xs={{ span: 24 }}>
-            <Select allowClear placeholder="Gourmandise ?">
+            <Select onChange={(e) => setPtVenteValue(e)} style={{ width: "100%" }} allowClear placeholder="Gourmandise ?">
               <Option value="all">Toutes Gourmandises</Option>
+              {
+                pt_vente?.map(item => <Option value={item}>{item}</Option>)
+              }
             </Select>
-            <DatePicker.RangePicker
-              placeholder={["Date Début", "Date Fin"]}
-              style={{ marginLeft: "20px" }}
-            />
           </Col>
-          <br></br>
+          <br />
           <Col xs={{ span: 24 }}>
             <Select
+              onChange={(e) => setQuestionValue(e)}
               allowClear
               placeholder="Filter par ?"
               style={{ width: "100%" }}
             >
-              <Option value=""></Option>
-              <Option value=""></Option>
-              <Option value=""></Option>
+              {
+                question?.map(item => <Option value={item}>{item}</Option>)
+              }
             </Select>
             <br />
             <br />
+            <DatePicker.RangePicker
+              placeholder={["Date Début", "Date Fin"]}
+            />
+            <br />
+            <br />
             <a
+              onClick={() => getDataChart()}
               class="button button-primary button-wide-mobile button-sm"
-              href="/admin#0"
+              href="#"
             >
               Valider
             </a>
@@ -119,10 +178,7 @@ const Dashboard = () => {
       <Col span={18}>
         <div style={{ display: "flex" }}>
           <Col xs={{ span: 24 }} sm={{ span: 12 }}>
-            <GlobalStatistic description={"Nbr de visite total"} value={54} />
-          </Col>
-          <Col xs={{ span: 24 }} sm={{ span: 12 }}>
-            <GlobalStatistic description={"Nbr de visite total"} value={54} />
+            <GlobalStatistic description={"Nbr de visite total"} value={totalVisite} />
           </Col>
         </div>
         <br />
@@ -132,12 +188,12 @@ const Dashboard = () => {
           </Card>
         </Col>
       </Col>
-      <Col span={6}>
+      {/* <Col span={6}>
         <Col xs={{ span: 24 }}>
           <Card title="Top Gourmandise">
             <List
               itemLayout="horizontal"
-              dataSource={data}
+              dataSource={dataPt}
               renderItem={(item) => (
                 <List.Item>
                   <List.Item.Meta
@@ -149,7 +205,17 @@ const Dashboard = () => {
             />
           </Card>
         </Col>
-      </Col>
+      </Col> */}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </Row>
   );
 };
