@@ -5,7 +5,7 @@ import { Card, Col, Row, Statistic } from "antd";
 //ICONS
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 
-const GlobalStatistic = ({ title, description, value }) => {
+const GlobalStatistic = ({ title, description, value, suffix }) => {
   return (
     <div className="site-statistic-demo-card">
       <Card title={title}>
@@ -14,7 +14,7 @@ const GlobalStatistic = ({ title, description, value }) => {
           value={value}
           precision={0}
           valueStyle={{ color: "#3f8600" }}
-          suffix={" Visites"}
+          suffix={suffix}
         />
       </Card>
     </div>

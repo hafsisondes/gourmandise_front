@@ -15,6 +15,7 @@ import Steps from "./views/Steps/Steps";
 import Evaluation from "./components/sections/Evaluation/Evaluation";
 import DataMenage from "./views/DataMenage/DataMenage";
 import UserRole from "./views/UserRole/UserRole";
+import Connexion from "./views/Connexion/Connexion";
 
 // // Initialize Google Analytics
 // ReactGA.initialize(process.env.REACT_APP_GA_CODE);
@@ -27,7 +28,7 @@ import UserRole from "./views/UserRole/UserRole";
 const App = () => {
   const childRef = useRef();
   let location = useLocation();
-
+  let isLogin = false;
   useEffect(() => {
     const page = location.pathname;
     document.body.classList.add("is-loaded");
@@ -41,13 +42,18 @@ const App = () => {
       ref={childRef}
       children={() => (
         <Switch>
-          <AppRoute
-            exact
-            path="/home"
-            component={Home}
-            layout={LayoutDefault}
-          />
+          {isLogin ? (
+            <AppRoute
+              exact
+              path="/home"
+              component={Home}
+              layout={LayoutDefault}
+            />
+          ) : (
+            <AppRoute exact path="/home" component={Connexion} />
+          )}
           <AppRoute exact path="/" component={UserRole} />
+
           <Route path="/Steps/:ptVenteID?">
             <Steps />
           </Route>
