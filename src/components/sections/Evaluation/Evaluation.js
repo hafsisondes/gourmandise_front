@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
 import axios from "../../../services/axios";
 
-// composant pour design 
+// composant pour design
 import {
   Card,
   Radio,
@@ -19,7 +17,7 @@ import { getPointVente, getQuestion } from "../../../services/PointVente";
 //CSS Module
 import * as classes from "./Evaluation.module.css";
 
-//Components 
+//Components
 const { Title, Text } = Typography;
 const { Option } = Select;
 
@@ -29,7 +27,6 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
   const [pointVente, setPointVente] = useState(null);
   const [question, setQuestion] = useState(null);
   const [selectedPointVente, setSelectedPointVente] = useState(null);
-  const { ptVenteID } = useParams();
   const [form] = Form.useForm();
 
   //get Point de vente
@@ -45,16 +42,16 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
   useEffect(() => {
     const request = async () => {
       const data = await getQuestion();
-      const newData = data.data?.map(item =>
-        item.reponse = item.reponse.split('#')
-      )
+      const newData = data.data?.map(
+        (item) => (item.reponse = item.reponse.split("#"))
+      );
       console.log(data);
       setQuestion(data);
     };
     request();
   }, []);
 
-  //Ajout evaluation 
+  //Ajout evaluation
   const onFinish = (values) => {
     setEvaluationData({ ...EvaluationData, evaluation: values });
 
@@ -116,15 +113,17 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           title={
             "Quel point de vente ou espace de gourmandise le plus proche de vous ? *"
           }
-        > <Form.Item
-          name="local"
-          rules={[
-            {
-              required: true,
-              message: "Veuiliez Scanner !",
-            },
-          ]}
         >
+          {" "}
+          <Form.Item
+            name="local"
+            rules={[
+              {
+                required: true,
+                message: "Veuiliez Scanner !",
+              },
+            ]}
+          >
             {
               <Select
                 placeholder={"Sélectionner"}
@@ -137,9 +136,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
                     </Option>
                   ))}
               </Select>
-
             }
-
           </Form.Item>
         </Card>
 
@@ -210,13 +207,13 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
               },
             ]}
           >
-            <Select name="region" placeholder={"Sélectionner"}>
-              <Option value={"Nabeul"}>Nabeul</Option>
-              <Option value={"Zagoune"}>Zagoune</Option>
-              <Option value={"Tunis"}>Tunis</Option>
-              <Option value={"Ariana"}>Ariana</Option>
-              <Option value={"Ben Arous"}>Ben Arous</Option>
+            <Select placeholder={"Sélectionner"} allowClear showSearch>
               <Option value={"Bizerte"}>Bizerte</Option>
+              <Option value={"Ariana"}>Ariana</Option>
+              <Option value={"Tunis"}>Tunis</Option>
+              <Option value={"Ben Arous"}>Ben Arous</Option>
+              <Option value={"Nabeul"}>Nabeul</Option>
+              <Option value={"Zaghoune"}>Zaghoune</Option>
               <Option value={"Manouba"}>Manouba</Option>
               <Option value={"Sousse"}>Sousse</Option>
               <Option value={"Mounastir"}>Mounastir</Option>
@@ -224,11 +221,11 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
               <Option value={"Seliana"}>Seliana</Option>
               <Option value={"Beja"}>Beja</Option>
               <Option value={"Le Kef"}>Le Kef</Option>
-              <Option value={"Ben Arous"}>Ben Arous</Option>
               <Option value={"Tatouine"}>Tatouine</Option>
               <Option value={"Gbeli"}>Gbeli</Option>
               <Option value={"Kairouane"}>Kairouane</Option>
               <Option value={"Gafsa"}>Gafsa</Option>
+              <Option value={"Kasserine"}>Kasserine</Option>
               <Option value={"Tozeur"}>Tozeur</Option>
               <Option value={"Mednine"}>Mednine</Option>
               <Option value={"Sfax"}>Sfax</Option>
@@ -239,10 +236,8 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
           </Form.Item>
         </Card>
 
-
-        {
-          question &&
-          question.data?.map((item, index) =>
+        {question &&
+          question.data?.map((item, index) => (
             <Card
               key={index}
               align="left"
@@ -259,14 +254,19 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
                   },
                 ]}
               >
-                {
-                  item.type_reponse === "single" &&
-                  <Radio.Group >
-                    {
-                      item.reponse?.map(rep => <><Radio children={`${rep}`} value={`${rep}`}> {`${rep}`}</Radio><br /></>)
-                    }
+                {item.type_reponse === "single" && (
+                  <Radio.Group>
+                    {item.reponse?.map((rep) => (
+                      <>
+                        <Radio children={`${rep}`} value={`${rep}`}>
+                          {" "}
+                          {`${rep}`}
+                        </Radio>
+                        <br />
+                      </>
+                    ))}
                   </Radio.Group>
-                }
+                )}
 
                 {/* {
                   item.type_reponse === "multi" &&
@@ -277,11 +277,9 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
                     }
                   </Checkbox.Group>
                 } */}
-
               </Form.Item>
             </Card>
-          )
-        }
+          ))}
         <Card
           align="left"
           hoverable
@@ -306,6 +304,5 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
     </div>
   );
 };
-
 
 export default Evaluation;

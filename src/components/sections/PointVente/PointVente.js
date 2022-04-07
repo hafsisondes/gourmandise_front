@@ -21,13 +21,13 @@ const Questions = ({ getPtVenteList }) => {
     console.log(values);
     values.nbr_visite = 0;
     try {
-      const { data } = await axios.post('/pt_de_vente/create.php', values);
-      data && message.success('utilisateur Ajouter avec success');
+      const { data } = await axios.post("/pt_de_vente/create.php", values);
+      data && message.success("utilisateur Ajouter avec success");
       form.resetFields();
       getPtVenteList();
     } catch (error) {
-      message.error('verfier vos données');
-      console.error(error)
+      message.error("verfier vos données");
+      console.error(error);
     }
   };
 
@@ -64,12 +64,12 @@ const Questions = ({ getPtVenteList }) => {
         ]}
       >
         <Select name="region" placeholder={"Sélectionner la region"}>
-          <Option value={"Nabeul"}>Nabeul</Option>
-          <Option value={"Zagoune"}>Zagoune</Option>
-          <Option value={"Tunis"}>Tunis</Option>
-          <Option value={"Ariana"}>Ariana</Option>
-          <Option value={"Ben Arous"}>Ben Arous</Option>
           <Option value={"Bizerte"}>Bizerte</Option>
+          <Option value={"Ariana"}>Ariana</Option>
+          <Option value={"Tunis"}>Tunis</Option>
+          <Option value={"Ben Arous"}>Ben Arous</Option>
+          <Option value={"Nabeul"}>Nabeul</Option>
+          <Option value={"Zaghoune"}>Zaghoune</Option>
           <Option value={"Manouba"}>Manouba</Option>
           <Option value={"Sousse"}>Sousse</Option>
           <Option value={"Mounastir"}>Mounastir</Option>
@@ -77,11 +77,11 @@ const Questions = ({ getPtVenteList }) => {
           <Option value={"Seliana"}>Seliana</Option>
           <Option value={"Beja"}>Beja</Option>
           <Option value={"Le Kef"}>Le Kef</Option>
-          <Option value={"Ben Arous"}>Ben Arous</Option>
           <Option value={"Tatouine"}>Tatouine</Option>
           <Option value={"Gbeli"}>Gbeli</Option>
           <Option value={"Kairouane"}>Kairouane</Option>
           <Option value={"Gafsa"}>Gafsa</Option>
+          <Option value={"Kasserine"}>Kasserine</Option>
           <Option value={"Tozeur"}>Tozeur</Option>
           <Option value={"Mednine"}>Mednine</Option>
           <Option value={"Sfax"}>Sfax</Option>
@@ -95,9 +95,9 @@ const Questions = ({ getPtVenteList }) => {
         label="Services"
         rules={[{ required: true, message: "Choisir le type" }]}
       >
-        <Select placeholder="Type de service  "   >
-          <Option value="Café" >Café</Option>
-          <Option value="Patteserie" >Patteserie</Option>
+        <Select placeholder="Type de service  ">
+          <Option value="Café">Café</Option>
+          <Option value="Patteserie">Patteserie</Option>
         </Select>
       </Form.Item>
 
