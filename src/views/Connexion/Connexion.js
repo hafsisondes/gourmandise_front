@@ -1,11 +1,29 @@
 import React from "react";
-import { Col, Row, Typography, Form, Input, Button, Checkbox } from "antd";
-
+import { Col, Row, Typography, Form, Input, Button, Checkbox, message } from "antd";
+import axios from "../../services/axios"
 import * as classes from "./Connexion.module.css";
+const { useForm } = Form;
 
 const Connexion = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const [form] = useForm();
+  const onFinish = async (values) => {
+    console.log(values)
+    try {
+      const { data } = await axios.get('/user/connexion.php?login=' + values.login + "&password=" + values.password);
+      console.log()
+      if (data.itemCount === 1) {
+        localStorage.setItem('grmdConnect', true)
+      }
+      else {
+        form.resetFields()
+        message.error("Login ou mot de passe incorrect")
+      }
+      window.location.reload()
+    } catch (error) {
+      form.resetFields()
+      message.error("Login ou mot de passe incorrect")
+
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -13,7 +31,7 @@ const Connexion = () => {
   };
   return (
     <Row className={classes.container} align={"center"}>
-      <Col span={20} style={{ height: "200px" }}>
+      <Col span={16} style={{ height: "200px" }}>
         <Typography.Title level={2}>Bienvenue à Gourmandise </Typography.Title>
         <Typography.Title level={3} type={"secondary"}>
           Identifiez-vous
@@ -22,10 +40,12 @@ const Connexion = () => {
       <Col
         className={classes.card}
         xs={{ span: 20 }}
-        md={{ span: 12 }}
+        md={{ span: 8 }}
         align="center"
       >
         <Form
+
+          form={form}
           name="basic"
           initialValues={{ remember: true }}
           onFinish={onFinish}
@@ -34,9 +54,9 @@ const Connexion = () => {
           layout="vertical"
         >
           <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label="Login"
+            name="login"
+            rules={[{ required: true, message: "Please input your login!" }]}
           >
             <Input />
           </Form.Item>

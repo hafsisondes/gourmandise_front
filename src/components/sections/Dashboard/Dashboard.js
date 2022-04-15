@@ -16,6 +16,7 @@ import {
 import { Bar, Pie } from "react-chartjs-2";
 import axios from "../../../services/axios";
 import { useEffect } from "react";
+import PieCharts from "../../charts/PieCharts";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 ChartJS.register(
@@ -110,7 +111,7 @@ const Dashboard = () => {
       const dataNew = [];
       const labels = [];
       data.data.body.forEach((element) => {
-        dataNew.push(element.nbr);
+        dataNew.push(element.nbr / question.length);
         labels.push(element.reponse);
       });
       setdataChart({
@@ -122,7 +123,7 @@ const Dashboard = () => {
           },
         ],
       });
-    } catch (error) {}
+    } catch (error) { }
   };
   useEffect(() => {
     getStatistiqueParams();
@@ -133,7 +134,7 @@ const Dashboard = () => {
 
   return (
     <Row gutter={[30, 30]}>
-      <Col xs={{ span: 24 }} sm={{ span: 8 }}>
+      <Col xs={{ span: 24 }} sm={{ span: 12 }}>
         <GlobalStatistic
           suffix={"Visites"}
           description={"Nbr de visite total"}
@@ -141,7 +142,7 @@ const Dashboard = () => {
         />
       </Col>
 
-      <Col xs={{ span: 24 }} sm={{ span: 8 }}>
+      <Col xs={{ span: 24 }} sm={{ span: 12 }}>
         <GlobalStatistic
           suffix={"Local"}
           description={"Nbr de Gourmandise"}
@@ -149,51 +150,46 @@ const Dashboard = () => {
         />
       </Col>
 
-      <Col xs={{ span: 24 }} sm={{ span: 8 }}>
-        <GlobalStatistic
-          description={"Nbr de Gourmandise"}
-          value={totalVisite}
-        />
-      </Col>
-
       <Col
         xs={{ span: 24 }}
-        sm={{ span: 12 }}
-        md={{ span: 6 }}
-        lg={{ span: 6 }}
+        sm={{ span: 24 }}
+        md={{ span: 12 }}
+        lg={{ span: 12 }}
       >
         <Card title="Visite / Point de vente ">
-          <Pie data={data} />
+          {question.length > 0 &&
+            <PieCharts type="visite" question={question.length} />
+          }
         </Card>
       </Col>
       <Col
         xs={{ span: 24 }}
-        sm={{ span: 12 }}
-        md={{ span: 6 }}
-        lg={{ span: 6 }}
+        sm={{ span: 24 }}
+        md={{ span: 12 }}
+        lg={{ span: 12 }}
       >
         <Card title="Age des visiteurs">
-          <Pie data={data} />
+          <PieCharts type="age" />
         </Card>
       </Col>
       <Col
         xs={{ span: 24 }}
-        sm={{ span: 12 }}
-        md={{ span: 6 }}
-        lg={{ span: 6 }}
+        sm={{ span: 24 }}
+        md={{ span: 12 }}
+        lg={{ span: 12 }}
       >
         <Card title="Region des visiteurs">
-          <Pie data={data} />
+          <PieCharts type="region" />
         </Card>
       </Col>
       <Col
         xs={{ span: 24 }}
-        sm={{ span: 12 }}
-        md={{ span: 6 }}
-        lg={{ span: 6 }}
+        sm={{ span: 24 }}
+        md={{ span: 12 }}
+        lg={{ span: 12 }}
       >
         <Card title="Sexe des visiteurs">
-          <Pie data={data} />
+          <PieCharts type="sexe" />
         </Card>
       </Col>
 

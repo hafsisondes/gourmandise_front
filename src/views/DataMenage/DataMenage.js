@@ -62,11 +62,6 @@ const DataMenage = () => {
     console.log(selectTab);
   }, [selectTab])
 
-
-
-
-
-
   return (
     <div className={classes.container}>
       <Row gutter={30} >
@@ -87,7 +82,6 @@ const DataMenage = () => {
               }
               key={1}
               animated
-
             >
               <UserConfiguartion getUsersList={getUsersList} />
             </TabPane>

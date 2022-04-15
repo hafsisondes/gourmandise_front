@@ -21,11 +21,13 @@ const { Option } = Select;
 const { TextArea } = Input
 const Questions = ({ getQuestionList }) => {
     const [form] = Form.useForm()
+
     const onFinish = async (values) => {
         console.log(values);
         try {
             const { data } = await axios.post('/question/create_qts.php', values);
-            data && message.success('utilisateur Ajouter avec success');
+            data && message.success('Question Ajouter avec success');
+
             form.resetFields();
             getQuestionList()
         } catch (error) {
@@ -37,7 +39,7 @@ const Questions = ({ getQuestionList }) => {
 
     return (
         <Form
-            ref={form}
+            form={form}
             wrapperCol={16}
             layout="vertical"
             labelAlign="left"

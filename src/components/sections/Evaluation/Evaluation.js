@@ -11,6 +11,9 @@ import {
   Form,
   Select,
   Button,
+  Checkbox,
+  Row,
+  Col,
 } from "antd";
 // import function to get data from database
 import { getPointVente, getQuestion } from "../../../services/PointVente";
@@ -42,14 +45,22 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
   useEffect(() => {
     const request = async () => {
       const data = await getQuestion();
-      const newData = data.data?.map(
-        (item) => (item.reponse = item.reponse.split("#"))
-      );
-      console.log(data);
+
+
+      let newData = data.data?.map(item => {
+        item.reponse = item.reponse.split("#")
+
+        if (item.type_reponse === 'multi') {
+          console.log(item.reponse)
+          item.reponse = item.reponse.map(rep => rep = { label: rep, value: rep })
+        }
+      });
+      console.log(data)
       setQuestion(data);
     };
     request();
   }, []);
+
 
   //Ajout evaluation
   const onFinish = (values) => {
@@ -74,9 +85,11 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             reponse: values[question],
             id_pt_de_vente: selectedPointVente,
           };
-          axios
-            .post("evaluation/create_ev.php", evaluationItem)
-            .then((res) => console.log(res));
+
+          evaluationItem.id_question &&
+            axios
+              .post("evaluation/create_ev.php", evaluationItem)
+              .then((res) => console.log(res));
         }
       })
       .finally(() => {
@@ -238,6 +251,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
 
         {question &&
           question.data?.map((item, index) => (
+            item.label &&
             <Card
               key={index}
               align="left"
@@ -245,39 +259,63 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
               className={classes.formCard}
               title={item.label}
             >
-              <Form.Item
-                name={item.id_question}
-                rules={[
-                  {
-                    required: true,
-                    message: "Champ obligatoire !",
-                  },
-                ]}
-              >
-                {item.type_reponse === "single" && (
+              {item.type_reponse === "multi" && (
+
+                <Form.Item
+                  style={{ display: "table-caption!important" }}
+                  name={item.id_question}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Champ obligatoire !",
+                    },
+                  ]}
+                  onChange={(e) => console.log(e)}
+                >
+
+                  <Checkbox.Group style={{ width: '100%' }} onChange={(e) => console.log(e)}>
+                    <Row>
+                      {
+                        item.reponse?.map(rep =>
+                          <Col span={24}>
+                            <Checkbox value={rep.value}>{rep.value}</Checkbox>
+                          </Col>
+                        )
+                      }
+                    </Row>
+                  </Checkbox.Group>
+                </Form.Item>
+              )}
+
+              {item.type_reponse === "single" && (
+                <Form.Item
+                  style={{ display: "table-caption!important" }}
+                  name={item.id_question}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Champ obligatoire !",
+                    },
+                  ]}
+                  onChange={(e) => console.log(e)}
+                >
+
                   <Radio.Group>
                     {item.reponse?.map((rep) => (
                       <>
                         <Radio children={`${rep}`} value={`${rep}`}>
-                          {" "}
                           {`${rep}`}
                         </Radio>
                         <br />
                       </>
                     ))}
                   </Radio.Group>
-                )}
 
-                {/* {
-                  item.type_reponse === "multi" &&
-                  <Checkbox.Group options={serveurs} name={"QS" + item.id_question} >
 
-                    {
-                      item.reponse?.map(rep => <><Checkbox value={rep}> {rep}</Checkbox><br /></>)
-                    }
-                  </Checkbox.Group>
-                } */}
-              </Form.Item>
+                </Form.Item>
+              )}
+
+
             </Card>
           ))}
         <Card

@@ -22,7 +22,7 @@ const Questions = ({ getPtVenteList }) => {
     values.nbr_visite = 0;
     try {
       const { data } = await axios.post("/pt_de_vente/create.php", values);
-      data && message.success("utilisateur Ajouter avec success");
+      data && message.success("Point de vente Ajouter avec success");
       form.resetFields();
       getPtVenteList();
     } catch (error) {
@@ -33,7 +33,7 @@ const Questions = ({ getPtVenteList }) => {
 
   return (
     <Form
-      ref={form}
+      form={form}
       wrapperCol={16}
       layout="vertical"
       labelAlign="left"

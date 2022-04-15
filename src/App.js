@@ -38,20 +38,23 @@ const App = () => {
   }, [location]);
 
   return (
-    <ScrollReveal
+
+    < ScrollReveal
       ref={childRef}
       children={() => (
         <Switch>
-          {isLogin ? (
-            <AppRoute
-              exact
-              path="/home"
-              component={Home}
-              layout={LayoutDefault}
-            />
-          ) : (
-            <AppRoute exact path="/home" component={Connexion} />
-          )}
+          {
+
+            !localStorage.getItem('grmdConnect') ? (
+              <AppRoute
+                exact
+                path="/home"
+                component={Home}
+                layout={LayoutDefault}
+              />
+            ) : (
+              <AppRoute exact path="/home" component={Connexion} />
+            )}
           <AppRoute exact path="/" component={UserRole} />
 
           <Route path="/Steps/:ptVenteID?">

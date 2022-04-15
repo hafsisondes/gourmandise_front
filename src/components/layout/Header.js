@@ -128,9 +128,9 @@ const Header = ({
                         <Link
                           to="/"
                           className="button button-primary button-wide-mobile button-sm"
-                          onClick={closeMenu}
+                          onClick={() => localStorage.removeItem('grmdConnect')}
                         >
-                          Home
+                          Déconnexion
                         </Link>
                       </li>
                     </ul>

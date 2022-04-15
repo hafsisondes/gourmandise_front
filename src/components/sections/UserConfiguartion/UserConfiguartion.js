@@ -2,10 +2,8 @@ import React from 'react'
 import { Form, Input, InputNumber, Button, Checkbox, message } from 'antd';
 import axios from '../../../services/axios';
 
-
-
 const UserConfiguartion = ({ getUsersList }) => {
-
+    const [form] = Form.useForm()
     const onFinish = async (values) => {
         console.log('Success:', values);
 
@@ -18,6 +16,7 @@ const UserConfiguartion = ({ getUsersList }) => {
         try {
             const { data } = await axios.post('user/create.php', newUser);
             data && message.success('utilisateur Ajouter avec success');
+            form.resetFields();
             getUsersList()
         } catch (error) {
             message.error('verfier vos données');
@@ -33,6 +32,7 @@ const UserConfiguartion = ({ getUsersList }) => {
 
     return (
         <Form
+            form={form}
             wrapperCol={16}
             layout="vertical"
             labelAlign='left'
