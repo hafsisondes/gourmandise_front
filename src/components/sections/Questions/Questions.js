@@ -86,8 +86,7 @@ const Questions = ({ getQuestionList }) => {
                 <Select placeholder="Type de réponse"   >
                     <Option value="single" >Seul reponse</Option>
                     <Option value="multi" >Multi choix</Option>
-                    <Option value="list" >Liste</Option>
-                    <Option value="text" >Text</Option>
+                    <Option value="taux" >Taux</Option>
                 </Select>
             </Form.Item>
             <Form.Item

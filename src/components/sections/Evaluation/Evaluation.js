@@ -14,6 +14,7 @@ import {
   Checkbox,
   Row,
   Col,
+  Rate,
 } from "antd";
 // import function to get data from database
 import { getPointVente, getQuestion } from "../../../services/PointVente";
@@ -314,6 +315,26 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
 
                 </Form.Item>
               )}
+
+              {item.type_reponse === "taux" && (
+                <Form.Item
+                  style={{ display: "table-caption!important" }}
+                  name={item.id_question}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Champ obligatoire !",
+                    },
+                  ]}
+                  onChange={(e) => console.log(e)}
+                >
+
+                  <Rate />
+
+
+                </Form.Item>
+              )}
+
 
 
             </Card>
