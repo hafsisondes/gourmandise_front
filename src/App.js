@@ -45,7 +45,7 @@ const App = () => {
         <Switch>
           {
 
-            !localStorage.getItem('grmdConnect') ? (
+            localStorage.getItem('grmdConnect') ? (
               <AppRoute
                 exact
                 path="/home"

@@ -24,6 +24,10 @@ const Questions = ({ getQuestionList }) => {
 
     const onFinish = async (values) => {
         console.log(values);
+
+        if (values.type_reponse === 'taux') {
+            values.reponse = '1#2#3#4#5';
+        }
         try {
             const { data } = await axios.post('/question/create_qts.php', values);
             data && message.success('Question Ajouter avec success');
@@ -75,7 +79,7 @@ const Questions = ({ getQuestionList }) => {
                     <Option value={"serveurs"}>Serveurs</Option>
                     <Option value={"prix"}>Prix</Option>
                     <Option value={"personnel"}>Personnel</Option>
-                    <Option value={"sutre"}>Autre</Option>
+                    <Option value={"autre"}>Autre</Option>
                 </Select>
             </Form.Item>
             <Form.Item

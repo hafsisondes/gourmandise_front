@@ -7,7 +7,7 @@ import logo from "../../assets/images/gourmandise.png";
 import * as classes from "./Steps.module.css";
 import Evaluation from "../../components/sections/Evaluation/Evaluation";
 import { Col, Row, Result, Button } from "antd";
-import { SmileOutlined } from "@ant-design/icons/lib/icons";
+import { SmileOutlined, HomeOutlined } from "@ant-design/icons/lib/icons";
 const Steps = () => {
   const btnNextStyles = {
     color: "#bf9a62",
@@ -94,6 +94,7 @@ const Steps = () => {
 
   return (
     <Row className={classes.stepsContainer} align={"center"}>
+      <HomeOutlined style={{ position: 'fixed', top: 10, right: 10, fontSize: '25px' }} onClick={() => window.location = '/'} />
       <Col xs={{ span: 20 }} md={{ span: 16 }}>
         <img className={classes.appLogo} src={logo}></img>
         <br />
@@ -111,12 +112,21 @@ const Steps = () => {
             icon={<SmileOutlined style={{ color: "#bf9a62b5" }} />}
             title="Merci pour vos réponses vous pouvez visiter le site pour plus d'informations!"
             extra={
-              <Button
-                style={{ color: "#bf9a62" }}
-                onClick={() => window.open("https://www.gourmandise.com.tn/")}
-              >
-                Visitez le site
-              </Button>
+              <>
+                <Button
+                  style={{ color: "#bf9a62" }}
+                  onClick={() => window.open("https://www.gourmandise.com.tn/")}
+                >
+                  Visitez le site
+                </Button>
+                <Button
+                  ghost
+                  style={{ color: "#bf9a62" }}
+                  onClick={() => window.location = '/'}
+                >
+                  Acceuil
+                </Button>
+              </>
             }
           />
         )}

@@ -5,20 +5,37 @@ import { getPointVente } from "../../services/PointVente";
 import * as classes from "./Login.module.css";
 import { GoogleOutlined, UserOutlined } from "@ant-design/icons";
 import { GoogleLogin } from "react-google-login";
+import axios from "../../services/axios";
 
 const Login = ({ setIdentified, EvaluationData, setEvaluationData }) => {
   let history = useHistory();
   const [login, setlogin] = useState(null);
   const [identfianMethod, setIdentfianMethod] = useState(true);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (login.length >= 6) {
-      setIdentified(true);
-      setEvaluationData({
-        ...EvaluationData,
-        login: login,
-      });
+
+      try {
+        const data = await axios.get('/client/single_read_cl.php?email=' + login);
+        console.log(data)
+        if (data.data) {
+          message.error("Identifiant Exist");
+        } else {
+          setEvaluationData({
+            ...EvaluationData,
+            login: login,
+          });
+
+          setIdentified(true);
+        }
+      } catch (error) {
+        message.error("Probélme de connexion");
+
+      }
+
+
     } else {
       message.error("Identifiant non valide");
     }

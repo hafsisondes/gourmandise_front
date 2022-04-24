@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
+import { Result } from 'antd'
 import axios from '../../services/axios';
 
 const PieCharts = ({ type, question = 1 }) => {
     const [data, setData] = useState(null);
     const [chartData, setchartData] = useState({
-        series: [25, 15, 44, 55, 41, 17],
+        series: [],
         options: {
+            colors: ['#5b3c11', '#a96303', '#d8ac69', '#e7a854f5 ', '#dfd1b8f7'],
             chart: {
                 width: '100%',
                 type: 'pie',
             },
-            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            labels: [],
 
             plotOptions: {
                 pie: {
@@ -73,7 +75,15 @@ const PieCharts = ({ type, question = 1 }) => {
     }
     return (
         <div id="chart">
-            <ReactApexChart height={350} options={chartData.options} series={chartData.series} type="pie" />
+            {data === null ?
+                <Result
+                    status="error"
+                    title="Pas de données"
+                //    subTitle=""
+
+                />
+                :
+                <ReactApexChart height={250} options={chartData.options} series={chartData.series} type="pie" />}
         </div>
     )
 }

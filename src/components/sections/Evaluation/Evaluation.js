@@ -40,6 +40,7 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
       setPointVente(data);
     };
     request();
+    console.log(EvaluationData)
   }, []);
 
   // Get list quetion
@@ -94,6 +95,8 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
         }
       })
       .finally(() => {
+        axios.get("pt_de_vente/increment.php?local=" + selectedPointVente)
+        axios.get("evaluation/createDate.php");
         setEvalution(true);
       });
   };
@@ -170,9 +173,9 @@ const Evaluation = ({ setEvalution, EvaluationData, setEvaluationData }) => {
             ]}
           >
             <Radio.Group name="sexe">
-              <Radio value="F"> Femme</Radio>
+              <Radio value="Femme"> Femme</Radio>
               <br />
-              <Radio value="H">Homme </Radio>
+              <Radio value="Homme">Homme </Radio>
             </Radio.Group>
           </Form.Item>
         </Card>
